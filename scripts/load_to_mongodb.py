@@ -2,14 +2,20 @@ from pymongo import MongoClient
 import pandas as pd
 from datetime import datetime
 import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Paths
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 DATA_PATH = os.path.join(BASE_DIR, "data", "WA_Fn-UseC_-HR-Employee-Attrition.csv")
 
-# Connect to MongoDB
-client = MongoClient("mongodb://localhost:27017/")
-db = client["hr_db"]
+# Connect to MongoDB Atlas
+connection_string = os.getenv('MONGODB_URI')
+if not connection_string:
+    raise ValueError('MONGODB_URI environment variable is not set')
+client = MongoClient(connection_string)
+db = client["hr_rdbms_project"]
 
 # Drop existing collections if any
 db.departments.drop()

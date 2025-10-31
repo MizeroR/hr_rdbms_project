@@ -22,6 +22,7 @@ CREATE TABLE JobRoles (
 CREATE TABLE Employees (
     employee_id INTEGER PRIMARY KEY,
     age INTEGER,
+    attrition TEXT,
     gender TEXT,
     education INTEGER,
     education_field TEXT,
@@ -46,8 +47,10 @@ CREATE TABLE Employees (
     num_companies_worked INTEGER,
     stock_option_level INTEGER,
     over_time TEXT,
-    over18 TEXT,
     percent_salary_hike INTEGER,
+    relationship_satisfaction INTEGER,
+    standard_hours INTEGER,
+    training_times_last_year INTEGER,
     department_id INTEGER,
     job_role_id INTEGER,
     FOREIGN KEY (department_id) REFERENCES Departments(department_id),
@@ -63,10 +66,17 @@ CREATE TABLE AttritionLog (
     FOREIGN KEY (employee_id) REFERENCES Employees(employee_id)
 );
 
+-- View: Get employee count by department
+CREATE VIEW employee_count_by_dept AS
+SELECT d.department_name, COUNT(e.employee_id) as employee_count
+FROM Departments d
+LEFT JOIN Employees e ON d.department_id = e.department_id
+GROUP BY d.department_id, d.department_name;
+
 -- Trigger: When employee attrition is updated to 'Yes', insert log entry
 CREATE TRIGGER log_attrition_change
-AFTER UPDATE OF attrition_status ON AttritionLog
-WHEN NEW.attrition_status = 'Yes'
+AFTER UPDATE OF attrition ON Employees
+WHEN NEW.attrition = 'Yes' AND OLD.attrition != 'Yes'
 BEGIN
     INSERT INTO AttritionLog (employee_id, attrition_status, log_date)
     VALUES (NEW.employee_id, 'Yes', datetime('now'));
