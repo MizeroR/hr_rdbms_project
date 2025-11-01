@@ -1,5 +1,6 @@
 # Environment variables
 .env
+.Venv
 
 # Database files
 *.db
@@ -35,4 +36,5 @@ Thumbs.db
 *.tmp
 *.temp
 
-API
+API/routers
+API/routers/.env.example
