@@ -4,27 +4,35 @@ from datetime import datetime, timezone
 import os
 from dotenv import load_dotenv
 
-load_dotenv()
-
+# Load .env from API directory
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
+ENV_PATH = os.path.join(BASE_DIR, "..", "API", ".env")
+load_dotenv(ENV_PATH)
+
 DATA_PATH = os.path.join(BASE_DIR, "WA_Fn-UseC_-HR-Employee-Attrition.csv")
 
 def connect_mongodb():
     connection_string = os.getenv('MONGODB_URI')
-    if connection_string:
-        try:
-            client = MongoClient(connection_string, serverSelectionTimeoutMS=5000)
-            client.admin.command('ping')
-            return client
-        except:
-            pass
+    print(f"Attempting MongoDB connection...")
     
+    if connection_string:
+        print(f"Using URI from .env file: {connection_string[:30]}...")
+        try:
+            client = MongoClient(connection_string, serverSelectionTimeoutMS=10000)
+            client.admin.command('ping')
+            print("Connected to MongoDB Atlas!")
+            return client
+        except Exception as e:
+            print(f"Atlas connection failed: {e}")
+    
+    print("Trying local MongoDB...")
     try:
         client = MongoClient('mongodb://localhost:27017/', serverSelectionTimeoutMS=3000)
         client.admin.command('ping')
+        print("Connected to local MongoDB!")
         return client
     except Exception as e:
-        raise ConnectionError("MongoDB connection failed") from e
+        raise ConnectionError(f"MongoDB connection failed. Atlas error (if tried), Local error: {e}") from e
 
 try:
     client = connect_mongodb()
@@ -71,10 +79,10 @@ try:
     
     db.AttritionLog.insert_many(attrition_logs)
     
-    print("✅ MongoDB data loaded successfully!")
+    print("MongoDB data loaded successfully!")
     
 except Exception as e:
-    print(f"❌ Error: {e}")
+    print(f"Error: {e}")
 finally:
     if 'client' in locals():
         client.close()
