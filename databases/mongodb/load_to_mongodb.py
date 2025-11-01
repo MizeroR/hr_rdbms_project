@@ -4,9 +4,9 @@ from datetime import datetime, timezone
 import os
 from dotenv import load_dotenv
 
-# Load .env from API directory
+# Load .env from project root
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
-ENV_PATH = os.path.join(BASE_DIR, "..", "API", ".env")
+ENV_PATH = os.path.join(BASE_DIR, "..", ".env")
 load_dotenv(ENV_PATH)
 
 DATA_PATH = os.path.join(BASE_DIR, "WA_Fn-UseC_-HR-Employee-Attrition.csv")
