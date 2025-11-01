@@ -10,27 +10,42 @@ HR Employee Attrition dataset from Kaggle - analyzing employee turnover patterns
 hr_rdbms_project/
 ├── README.md
 ├── requirements.txt
+├── .env                          # Environment variables
+├── .gitignore                    # Git ignore rules
+├── Academic_Report.md            # Project documentation
 ├── API/                          # FastAPI CRUD endpoints
 │   ├── main.py                   # Application entry point
 │   ├── database.py               # Database connections
 │   ├── models.py                 # Pydantic models
 │   ├── README.md                 # API documentation
+│   ├── .env.example              # Environment template
 │   └── routers/                  # API route handlers
+│       ├── __init__.py
 │       ├── employees.py
 │       ├── departments.py
 │       ├── job_roles.py
 │       └── attrition_logs.py
-└── databases/
-    ├── WA_Fn-UseC_-HR-Employee-Attrition.csv
-    ├── erd/
-    │   ├── diagram.md            # ERD diagram (Mermaid format)
-    │   └── hr_attrition.db       # SQLite database
-    ├── mongodb/
-    │   └── load_to_mongodb.py    # MongoDB loader
-    └── sqlite/
-        ├── load_to_sqlite.py     # SQLite loader
-        ├── schema.sql            # Database schema
-        └── stored_procedures.py  # Stored procedures
+├── databases/
+│   ├── WA_Fn-UseC_-HR-Employee-Attrition.csv
+│   ├── erd/
+│   │   ├── diagram.md            # ERD diagram (Mermaid format)
+│   │   ├── erd_diagram.png       # ERD visual diagram
+│   │   └── hr_attrition.db       # SQLite database
+│   ├── mongodb/
+│   │   └── load_to_mongodb.py    # MongoDB loader
+│   └── sqlite/
+│       ├── load_to_sqlite.py     # SQLite loader
+│       ├── schema.sql            # Database schema
+│       └── stored_procedures.py  # Stored procedures
+└── predictions/                  # ML prediction system
+    ├── README.md                 # Prediction documentation
+    ├── requirements.txt          # ML dependencies
+    ├── train_model.py            # Model training script
+    ├── fetch_latest_data.py      # Data fetching from API
+    ├── make_predictions.py       # Prediction script
+    └── model/                    # Trained models
+        ├── attrition_model.pkl   # Trained ML model
+        └── feature_names.pkl     # Feature metadata
 ```
 
 ## Task 1: Database Implementation ✅
