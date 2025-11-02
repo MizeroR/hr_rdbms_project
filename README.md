@@ -171,3 +171,75 @@ curl -X PUT "http://localhost:8000/api/v1/employees/sqlite/123" \
 - **Pydantic** - Data validation
 - **Pandas** - Data processing
 - **Uvicorn** - ASGI server
+
+# Task 3: Data Fetching and Prediction Scripts
+
+## Overview
+Scripts to fetch latest employee data via API and predict attrition using ML model.
+
+## Setup
+
+### 1. Install Dependencies
+bash
+pip install -r requirements.txt
+
+
+### 2. Train Model (First Time Only)
+bash
+python train_model.py
+
+
+### 3. Start API Server
+bash
+cd ../API
+uvicorn main:app --reload
+
+
+## Usage
+
+### Activity A: Fetch Latest Data
+bash
+python fetch_latest_data.py [sqlite|mongodb]
+
+- Fetches latest employee from API
+- Saves data to latest_employee_data.json
+
+### Activity B: Make Predictions
+bash
+python make_predictions.py
+
+- Loads trained model
+- Predicts attrition for fetched employee
+- Saves results to prediction_results.json
+
+### Complete Pipeline
+bash
+# Fetch data and make prediction
+python fetch_latest_data.py sqlite
+python make_predictions.py
+
+
+## Files Generated
+- latest_employee_data.json - Employee data from API
+- prediction_results.json - Prediction results
+- model/attrition_model.pkl - Trained ML model
+- model/feature_names.pkl - Feature names for model
+
+## Features Used for Prediction
+- Age
+- Education Level
+- Job Level  
+- Job Satisfaction
+- Monthly Income
+- Total Working Years
+- Years at Company
+
+## Output Format
+json
+{
+  "employee_id": 123,
+  "prediction": "No",
+  "confidence": 0.85,
+  "probability_yes": 0.15,
+  "probability_no": 0.85
+}
