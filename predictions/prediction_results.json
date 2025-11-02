@@ -1,0 +1,18 @@
+{
+  "employee_id": 1,
+  "prediction_results": {
+    "prediction": "Yes",
+    "confidence": 0.72,
+    "probability_no": 0.28,
+    "probability_yes": 0.72
+  },
+  "input_features": {
+    "Age": 41,
+    "Education": 2,
+    "JobLevel": 2,
+    "JobSatisfaction": 4,
+    "MonthlyIncome": 5993,
+    "TotalWorkingYears": 8,
+    "YearsAtCompany": 6
+  }
+}

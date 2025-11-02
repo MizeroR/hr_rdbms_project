@@ -75,7 +75,15 @@ def get_employees_sqlite(
         
         cur.execute(query, params)
         rows = cur.fetchall()
-        return [dict(row) for row in rows]
+        # Strip whitespace from string fields
+        result = []
+        for row in rows:
+            row_dict = dict(row)
+            for key, value in row_dict.items():
+                if isinstance(value, str):
+                    row_dict[key] = value.strip()
+            result.append(row_dict)
+        return result
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
     finally:
@@ -91,7 +99,12 @@ def get_employee_sqlite(employee_id: int):
         row = cur.fetchone()
         if row is None:
             raise HTTPException(status_code=404, detail=f"Employee {employee_id} not found")
-        return dict(row)
+        # Strip whitespace from string fields
+        row_dict = dict(row)
+        for key, value in row_dict.items():
+            if isinstance(value, str):
+                row_dict[key] = value.strip()
+        return row_dict
     except HTTPException:
         raise
     except Exception as e:
@@ -129,7 +142,12 @@ def update_employee_sqlite(employee_id: int, employee: EmployeeUpdate):
         # Fetch and return updated employee
         cur.execute("SELECT * FROM Employees WHERE employee_id = ?", (employee_id,))
         row = cur.fetchone()
-        return dict(row)
+        # Strip whitespace from string fields
+        row_dict = dict(row)
+        for key, value in row_dict.items():
+            if isinstance(value, str):
+                row_dict[key] = value.strip()
+        return row_dict
     except HTTPException:
         raise
     except Exception as e:

@@ -6,12 +6,12 @@ from pymongo import MongoClient
 import os
 from dotenv import load_dotenv
 
-# Load .env from the API directory
-ENV_PATH = os.path.join(os.path.dirname(__file__), '.env')
-load_dotenv(ENV_PATH)
-
-# Base directory
+# Base directory (project root)
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
+
+# Load .env from the project root
+ENV_PATH = os.path.join(BASE_DIR, '.env')
+load_dotenv(ENV_PATH)
 DB_PATH = os.path.join(BASE_DIR, "databases", "erd", "hr_attrition.db")
 
 class SQLiteDB:

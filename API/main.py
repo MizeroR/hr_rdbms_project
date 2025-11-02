@@ -69,12 +69,12 @@ def health_check():
 @app.on_event("startup")
 async def startup_event():
     """Initialize database connections on startup"""
-    print("🚀 Starting up HR Attrition API...")
-    print(f"📊 SQLite: {sqlite_db.test_connection()}")
-    print(f"📊 MongoDB: {mongodb_db.test_connection()}")
+    print("Starting up HR Attrition API...")
+    print(f"SQLite: {sqlite_db.test_connection()}")
+    print(f"MongoDB: {mongodb_db.test_connection()}")
 
 @app.on_event("shutdown")
 async def shutdown_event():
     """Close database connections on shutdown"""
     mongodb_db.close()
-    print("👋 Shutting down HR Attrition API...")
+    print("Shutting down HR Attrition API...")

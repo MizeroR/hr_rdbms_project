@@ -1,6 +1,8 @@
 -- db/schema.sql
 
--- Drop existing tables (for re-runs)
+-- Drop existing database objects (for re-runs)
+DROP TRIGGER IF EXISTS log_attrition_change;
+DROP VIEW IF EXISTS employee_count_by_dept;
 DROP TABLE IF EXISTS AttritionLog;
 DROP TABLE IF EXISTS Employees;
 DROP TABLE IF EXISTS Departments;

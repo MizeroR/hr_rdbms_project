@@ -12,6 +12,7 @@ def fetch_latest_employee(database="sqlite"):
     """Fetch the latest employee entry from the API"""
     try:
         url = f"{API_BASE_URL}/employees/{database}"
+        # response = requests.get(url)
         response = requests.get(url, params={"limit": 1, "skip": 0})
         response.raise_for_status()
         
